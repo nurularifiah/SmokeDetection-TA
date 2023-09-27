@@ -1,0 +1,50 @@
+<nav class="sidebar sidebar-offcanvas" id="sidebar">
+    <ul class="nav">
+        {% for item in navigation %}
+        <li class="nav-item nav-category">
+            {{ item.nav_header }}
+        </li>
+        {% for menu in item.nav_data %}
+        {% if menu.type == 'non-collapse' %}
+        {% if menu.link == active %}
+        <li class="nav-item active">
+            {% else %}
+        <li class="nav-item">
+            {% endif %}
+            <a class="nav-link" href="{{url_for(menu.link)}}">
+                <i class="menu-icon mdi {{ menu['icon'] }}"></i>
+                <span class="menu-title">
+                    {{ menu.nama }}
+                </span>
+            </a>
+        </li>
+        {% elif menu['type'] == 'collapse' %}
+        {% if menu['link'] == active %}
+        <li class="nav-item active">
+            {% else %}
+        <li class="nav-item">
+            {% endif %}
+            <a class="nav-link" data-bs-toggle="collapse" href="#{{menu['id']}}" aria-expanded="false">
+                <i class="menu-icon mdi {{ menu['icon'] }}"></i>
+                <span class="menu-title">
+                    {{ menu['nama'] }}
+                </span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="{{menu['id']}}">
+                <ul class="nav flex-column sub-menu">
+                    {% for sub_menu in menu['sub_nav'] %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{url_for(sub_menu.link)}}">
+                            {{ sub_menu['nama'] }}
+                        </a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </li>
+        {% endif %}
+        {% endfor %}
+        {% endfor %}
+    </ul>
+</nav>

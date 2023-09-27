@@ -1,0 +1,9 @@
+flask
+flask_cors
+requests
+Jinja2
+markupsafe
+numpy==1.18.1
+opencv-python==4.2.0.32
+itsdangerous==2.0.1
+werkzeug==2.0.3

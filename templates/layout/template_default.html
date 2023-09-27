@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  {% block meta %} {% endblock %} {% include "layout/js_variable_store.html"%}
+  <link rel="apple-touch-icon" sizes="76x76" href="{{url_for('static', filename='img/apple-touch-icon.png')}}" />
+  <link rel="icon" type="image/x-icon" href="{{url_for('static', filename='img/favicon-new.ico')}}" />
+  <title>{{ title }}</title>
+  <!-- plugins:css -->
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.min.css"><link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.0.1/css/buttons.dataTables.min.css">
+  <link rel="stylesheet" href="{{url_for('static', filename='starAdmin/vendors/feather/feather.css')}}">
+  <link rel="stylesheet" href="{{url_for('static', filename='starAdmin/vendors/mdi/css/materialdesignicons.min.css')}}">
+  <link rel="stylesheet" href="{{url_for('static', filename='starAdmin/vendors/ti-icons/css/themify-icons.css')}}">
+  <link rel="stylesheet" href="{{url_for('static', filename='starAdmin/vendors/typicons/typicons.css')}}">
+  <link rel="stylesheet" href="{{url_for('static', filename='starAdmin/vendors/simple-line-icons/css/simple-line-icons.css')}}">
+  <link rel="stylesheet" href="{{url_for('static', filename='starAdmin/vendors/css/vendor.bundle.base.css')}}">
+  <link rel="stylesheet" href="{{url_for('static', filename='starAdmin/css/vertical-layout-light/style.css')}}">
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.25/datatables.min.css"/>
+  <script src="https://code.jquery.com/jquery-2.2.4.js" integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI=" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="{{url_for('static', filename='starAdmin/vendors/feather/feather.css')}}">
+  <link rel="stylesheet" href="{{url_for('static', filename='starAdmin/vendors/mdi/css/materialdesignicons.min.css')}}">
+  <link rel="stylesheet" href="{{url_for('static', filename='starAdmin/vendors/ti-icons/css/themify-icons.css')}}">
+  <link rel="stylesheet" href="{{url_for('static', filename='starAdmin/vendors/typicons/typicons.css')}}">
+  <link rel="stylesheet" href="{{url_for('static', filename='starAdmin/vendors/simple-line-icons/css/simple-line-icons.css')}}">
+  <link rel="stylesheet" href="{{url_for('static', filename='starAdmin/vendors/css/vendor.bundle.base.css')}}">
+  <link rel="stylesheet" href="{{url_for('static', filename='starAdmin/css/vertical-layout-light/style.css')}}">
+</head>
+
+<body>
+
+  <div class="container-scroller">
+    {% include "components/navbar.html" %}
+    <div class="container-fluid page-body-wrapper">
+      {% with navigation=navigation, active=active %} {% include
+        "components/sidenav.html" %} {% endwith %}
+      <div class="main-panel">
+        <div class="content-wrapper">
+          {% block content %} {% endblock %}
+        </div>
+      </div>
+    </div>
+    {% include "components/footer.html" %}
+  </div>
+  
+  <script src="{{url_for('static', filename='starAdmin/vendors/js/vendor.bundle.base.js')}}"></script>
+  <script src="{{url_for('static', filename='starAdmin/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js')}}">
+  </script>
+  <script src="{{url_for('static', filename='starAdmin/js/off-canvas.js')}}"></script>
+  <script src="{{url_for('static', filename='starAdmin/vendors/progressbar.js/progressbar.min.js')}}"></script>
+  <script src="{{url_for('static', filename='starAdmin/js/Chart.roundedBarCharts.js')}}"></script>
+  <script src="{{url_for('static', filename='starAdmin/js/dashboard.js')}}"></script>
+  <script src="{{url_for('static', filename='starAdmin/vendors/progressbar.js/progressbar.min.js')}}"></script>
+ 
+  <script src="{{url_for('static', filename='starAdmin/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js')}}"></script>
+  <script src="{{url_for('static', filename='starAdmin/vendors/chart.js/Chart.min.js')}}"></script>
+  
+  <script src="{{url_for('static', filename='starAdmin/js/hoverable-collapse.js')}}"></script>
+  <script src="{{url_for('static', filename='starAdmin/js/template.js')}}"></script>
+  <script src="{{url_for('static', filename='starAdmin/js/settings.js')}}"></script>
+  <script src="{{url_for('static', filename='starAdmin/js/todolist.js')}}"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.0.1/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.0.1/js/buttons.html5.min.js"></script>
+  {% block javascript%} {% endblock %}
+</body>
+
+
+</html>

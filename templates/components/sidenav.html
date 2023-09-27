@@ -1,0 +1,39 @@
+<nav class="sidebar sidebar-offcanvas" id="sidebar">
+  <ul class="nav">
+    <li class="nav-item">
+      <a class="nav-link" href="{{url_for('Dashboard.index')}}">
+        <i class="mdi mdi-grid-large menu-icon"></i>
+        <span class="menu-title">Dashboard</span>
+      </a>
+    </li>
+    {% for data in navigation %}
+    <li class="nav-item nav-category">{{data['nav_header']}}</li>
+    {% for nav in data['nav_data'] %}
+    {% if nav['type'] == 'non-collapse' %}
+    <li class="nav-item">
+      <a class="nav-link {{ 'active-sidenav' if nav.link == active }}" href="{{url_for(nav.link)}}">
+        <i class="{{nav['icon']}}"></i>
+        <span class="menu-title">{{nav['nama']}}</span>
+      </a>
+    </li>
+    {% elif nav['type'] == 'collapse' %}      
+    <li class="nav-item">
+      <a class="nav-link {{ 'active-sidenav' if nav.link == active }}" data-bs-toggle="collapse" href="#{{nav['id']}}" aria-expanded="false"
+        aria-controls="ui-basic">
+        <i class="{{nav['icon']}}"></i>
+        <span class="menu-title">{{ nav['nama'] }}</span>
+        <i class="menu-arrow"></i>
+      </a>
+      <div class="collapse" id="{{nav['id']}}">
+        <ul class="nav flex-column sub-menu">
+          {% for sub_menu in nav['sub_nav'] %}
+          <li class="nav-item"> <a class="nav-link" href="{{url_for(sub_menu.link)}}">{{ sub_menu['nama'] }}</a></li>
+          {% endfor %}
+        </ul>
+      </div>
+    </li>
+    {% endif %}
+    {% endfor %} {% endfor %}
+  </ul>
+</nav>
+

@@ -1,0 +1,66 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="{{url_for('static', filename='favicon.ico')}}" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='/vendor/bootstrap/css/bootstrap.css')}}">
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700"
+      rel="stylesheet"
+    />
+    <link
+      id="pagestyle"
+      href="{{url_for('static', filename='argon/css/argon-dashboard.css')}}"
+      rel="stylesheet"
+    />
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            /* background-color: var(--bs-primary); */
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            color: white;
+            text-align: center;
+            justify-content: center;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-25px);
+            }
+
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        .float-content {
+            animation: float 1.5s ease-in-out infinite;
+        }
+    </style>
+    <title>Coming Soon</title>
+</head>
+
+<body class="bg-gradient-info">
+    <div class="container">
+        <div class="float-content">
+            <h2 class="fw-bolder display-4 text-white pb-2">Coming Soon 👌</h2>
+            <p class="fs-6">Fitur ini sedang dalam tahap pengembangan</p>
+            <div class="d-flex justify-content-center gap-3">
+                <button onclick="javascript:window.history.back();" class="btn btn-outline-light">Kembali</button>
+                <a href="{{url_for('Dashboard.index')}}" class="btn btn-outline-light">Pergi ke Dashboard</a>
+            </div>
+        </div>
+    </div>
+    <script src="{{url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+</body>
+
+</html>

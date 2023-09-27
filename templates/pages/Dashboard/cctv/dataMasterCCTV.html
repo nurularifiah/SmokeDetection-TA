@@ -1,0 +1,211 @@
+{% extends 'layout/template_default.html' %}
+{% block content %}
+
+<div class="col-lg-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Filter Data Deteksi</h4>
+            <form method="post" action="{{ url_for('Dashboard.cctv.dataMaster') }}">
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label for="filter_date">Filter per Hari</label>
+                        <input type="date" class="form-control" id="filter_date" name="filter_date">
+                    </div>
+                    <div class="form-group col-md-4">
+                        <button type="submit" class="btn btn-primary mt-4">Filter</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="col-lg-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Tabel Report Deteksi</h4>
+            <div class="table-responsive pt-3">
+                <table id="myTable" class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Result</th>
+                            <th>Time</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for detection in detections %}
+                        <tr>
+                            <td>{{ loop.index }}</td>
+                            <td>{{ detection.timestamp }}</td>
+                            <td>{{ detection.result }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="col-lg-12 mt-4">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Jumlah Deteksi</h4>
+            <div class="table-responsive pt-3">
+                <table id="countTable" class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Tanggal</th>
+                            <th>Jumlah Deteksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for date, count in detection_counts.items() %}
+                        <tr>
+                            <td>{{ date }}</td>
+                            <td>{{ count }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="col-lg-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Diagram Deteksi CCTV per Hari</h4>
+            <div class="chart-container">
+                <canvas id="myChart"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var detections = '{{ detections|tojson|safe }}';
+        var detectionCounts = {};
+
+        for (var i = 0; i < detections.length; i++) {
+            var date = detections[i].timestamp.split(' ')[0];
+            if (detectionCounts[date]) {
+                detectionCounts[date] += 1;
+            } else {
+                detectionCounts[date] = 1;
+            }
+        }
+
+        var countTableBody = document.getElementById('countTable').getElementsByTagName('tbody')[0];
+        for (var date in detectionCounts) {
+            var row = countTableBody.insertRow();
+            var dateCell = row.insertCell(0);
+            var countCell = row.insertCell(1);
+
+            dateCell.textContent = date;
+            countCell.textContent = detectionCounts[date];
+        }
+    });
+
+
+    $(document).ready(function() {
+        $('#myTable').DataTable({
+            dom: 'Bfrtip',
+            buttons: [
+                'csv',
+                'excel',
+                'pdf'
+            ]
+        });
+    });
+
+
+    document.addEventListener('DOMContentLoaded', function() {
+        var detections = '{{ detections|tojson|safe }}';
+        var data = JSON.parse(detections);
+        
+        var tanggal = [];
+        var jumlahDeteksi = [];
+        
+        // Memproses data deteksi per hari
+        for (var i = 0; i < data.length; i++) {
+            tanggal.push(data[i].timestamp);
+            jumlahDeteksi.push(data[i].result);
+        }
+        
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: tanggal,
+                datasets: [{
+                    label: 'Jumlah Deteksi',
+                    data: jumlahDeteksi,
+                    backgroundColor: 'rgba(75, 192, 192, 0.6)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    });
+    
+
+    document.addEventListener('DOMContentLoaded', function() {
+        var detections = '{{ detections|tojson|safe }}';
+        var detectionCounts = {};
+
+        for (var i = 0; i < detections.length; i++) {
+            var date = detections[i].timestamp.split(' ')[0];
+            if (detectionCounts[date]) {
+                detectionCounts[date] += 1;
+            } else {
+                detectionCounts[date] = 1;
+            }
+        }
+
+        var chartData = {
+            labels: Object.keys(detectionCounts),
+            datasets: [{
+                label: 'Jumlah Deteksi',
+                data: Object.values(detectionCounts),
+                backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1
+            }]
+        };
+
+        var chartOptions = {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    stepSize: 1
+                }
+            }
+        };
+
+        var detectionChart = document.getElementById('detectionChart').getContext('2d');
+        new Chart(detectionChart, {
+            type: 'bar',
+            data: chartData,
+            options: chartOptions
+        });
+    });
+</script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+{% endblock %}
+ 
